@@ -3,13 +3,13 @@ const User = require('../db/models/User');
 // Create link function (unchanged)
 const createLink = (data, userID) => {
   const linkData = {
-    title: "URL for Youtube",
-    link: "http://localhost:3000/IvHYtYdr3",
-    url: "https://www.youtube.com/",
+    title: data.title,
+    link: "http://localhost:3000/IvHYtYdr3", // duplicate link
+    url: data.url,
     clicks: 0,
   };
 
-  User.findById('6730c0296b5f12a4be87602f')
+  User.findById(userID)
     .then((res) => {
       res.urls.push(linkData);
       res.save()
