@@ -1,22 +1,29 @@
 var mongoose = require('mongoose')
 
 const linkSchema = new mongoose.Schema({
-    name:{
+    title:{
         type:String,
         required:true
     },
-    email:{
+    link:{
+        type:String,
+        required:true,
+        
+    },
+    actualUrl:{
         type:String,
         required:true
     },
-    password:{
+    userId:{
         type:String,
         required:true
     },
-    urls:{
-        type:Array
+    clicks:{
+        type:Number
     }
 })
 
+const Link = mongoose.model('link',linkSchema)
 
-module.exports = linkSchema
+
+module.exports = Link
