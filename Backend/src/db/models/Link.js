@@ -6,9 +6,7 @@ const linkSchema = new mongoose.Schema({
         required:true
     },
     link:{
-        type:String,
-        required:true,
-        
+        type:String
     },
     actualUrl:{
         type:String,

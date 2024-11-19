@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var { createLink, editLink, getLink, getAllLinks, deleteLink } = require('../service/urlService');
+var { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks } = require('../service/urlService');
 
 /* POST add-link */
 router.post('/add-link', async (req, res, next) => {
   const { userId, linkData } = req.body;  // Expecting `userID` and `linkData` in the body of the request
-  
+  const baseUrl = req.headers.host
   try {
-    const response = await createLink(linkData, userId)
+    const response = await createLink(linkData, userId, baseUrl)
     if (response?.details == "Link already exist") {
-      return res.status(404).json({ error: 'Error while adding link', details: response.details });
+      return res.status(404).json({ message: 'Error while adding link', details: response.details });
     }
     res.status(200).json({ message: 'Link added successfully', data: response });
   }
@@ -29,6 +29,19 @@ router.delete("/remove-link/:linkId", async (req, res, next)=>{
   }
   catch(err){
     res.status(500).json({ error: 'Error while deleting link', details: err.message });
+  }
+})
+
+router.delete("/remove-all", async (req, res, next)=>{
+  try{
+    const response = await deleteAllLinks()
+    if(response.details == "Cannot find the links"){
+      return res.status(404).json({message:"No links deleted", details:response.details})
+    }
+    res.status(200).json({message:"All links deleted", data:response})
+  }
+  catch(err){
+    res.status(500).json({ error: 'Error while deleting all links', details: err.message });
   }
 })
 

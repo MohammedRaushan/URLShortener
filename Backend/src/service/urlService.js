@@ -1,15 +1,21 @@
 const Link = require('../db/models/Link');
 
 // Create link function (unchanged)
-const createLink = async (data, userId) => {
+const createLink = async (data, userId, baseUrl) => {
   try {
-    const isLinkExist = await Link.find({ "link": data.link })
-    console.log(isLinkExist);
-
+    let isLinkExist;
+    let routelink;
+    while(true){
+      routelink = generateLink(baseUrl)
+      isLinkExist = await Link.find({ "link": routelink })
+      if(isLinkExist.length == 0){
+        break
+      }
+    }
     if (isLinkExist.length == 0) {
       const link = new Link({
         title: data.title,
-        link: data.link,
+        link: routelink,
         actualUrl: data.actualUrl,
         userId: userId,
         clicks: 0,
@@ -34,6 +40,14 @@ const deleteLink = async (linkId) => {
     return { error: "Something went wrong while deleting the link" };
   }
 };
+
+const deleteAllLinks = async ()=>{
+    const deletedLinks = await Link.deleteMany()
+    if(!deleteAllLinks){
+      return {details:"Cannot find the links"}
+    }
+    return deleteAllLinks
+}
 
 const editLink = async (linkId, updatedData) => {
   try {
@@ -80,4 +94,12 @@ const getLink = async (linkId) =>{
   }
 }
 
-module.exports = { createLink, editLink, getLink, getAllLinks, deleteLink };
+const generateLink = (baseUrl)=>{
+  const letters = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+  let result = ""
+  for(let i=0;i<8;i++){
+    result += letters[Math.ceil(Math.random()*letters.length-1)];
+  }
+  return baseUrl+"/"+result
+}
+module.exports = { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks };
