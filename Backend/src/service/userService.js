@@ -50,6 +50,24 @@ const getUser = async (userId) => {
     }
 };
 
+const getUserByEmailAndPassword = async (email, password) => {
+    try {
+        // Find the user by ID
+        const user = await User.find({email:email,password:password});
+
+        if (!user) {
+            console.log("User not found");
+            return { message: "User not found" };
+        }
+
+        console.log("User found:", user);
+        return {message:"User found",data:user};
+    } catch (error) {
+        console.error("Error getting user:", error);
+        return { message: "Error getting user", error };
+    }
+};
+
 // PUT update-user
 const updateUser = async (userId, newData) => {
     try {
@@ -80,4 +98,4 @@ const getAllUsers = async ()=>{
     }
 }
 
-module.exports = { createUser, getUser, deleteUser, updateUser, getAllUsers };
+module.exports = { createUser, getUser, deleteUser, updateUser, getAllUsers, getUserByEmailAndPassword };
