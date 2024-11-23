@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var { createUser, getUser, getAllUsers, deleteUser, updateUser } = require('../service/userService');
+var { createUser, getUser, getAllUsers, getUserByEmailAndPassword, deleteUser, updateUser } = require('../service/userService');
 
 /* POST create-user */
 router.post('/create-user', async function (req, res, next) {
@@ -32,6 +32,19 @@ router.get('/:userId', async (req, res, next) => {
   try {
     const userId = req.params.userId
     const response = await getUser(userId)
+
+    if(response.message == "User not found"){
+      return res.status(404).json({message:"User not found"})
+    }
+    res.status(200).json(response)
+  } catch (error) {
+    res.status(400).json({ error: "Error while fetching user", details: err.message });
+  }
+})
+router.get('/login', async (req, res, next) => {
+  try {
+    const {email, password} = req.body
+    const response = await getUserByEmailAndPassword(email, password)
 
     if(response.message == "User not found"){
       return res.status(404).json({message:"User not found"})
