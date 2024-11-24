@@ -2,6 +2,7 @@ import { Button, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import {apiUrl} from '../api/api'
 import axios from 'axios'
+import logo from '../assets/logo.png'
 
 export default function UserLogin() {
   const [name, setName]=useState('')
@@ -22,7 +23,11 @@ export default function UserLogin() {
   }
   const loginUser = async (e)=>{
     e.preventDefault()
-
+    let userData = {
+      email, password
+    }
+    const response = await axios.get(apiUrl+'/users/login',userData)
+    console.log(response);
   }
   const createAccount = async (e)=>{
     e.preventDefault()
@@ -38,7 +43,7 @@ export default function UserLogin() {
       <div id='container' className='bg-white h-[100%] flex overflow-hidden'>
         {/* Login Form */}
         <div className='hidden md:flex flex-1 justify-center items-center bg-[#004FF1]' style={{}}>
-          <img className='w-60 h-60' src="https://link.alpha.com.np/wp-content/uploads/2023/05/alpha-link-icon-1.png" alt="" />
+          <img className='w-60 h-60' src={logo} alt="" />
         </div>
         <form onSubmit={loginUser} id='login-form' className='flex flex-col space-y-4 flex-1 justify-center px-6 hidden'>
           <h1 className='text-5xl font-bold text-[#004FF1]'>Hi there!</h1>
