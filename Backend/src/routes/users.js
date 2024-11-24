@@ -28,7 +28,7 @@ router.get('/',async (req, res, next)=>{
 })
 
 // GET get-user
-router.get('/:userId', async (req, res, next) => {
+router.get('/get-user/:userId', async (req, res, next) => {
   try {
     const userId = req.params.userId
     const response = await getUser(userId)
