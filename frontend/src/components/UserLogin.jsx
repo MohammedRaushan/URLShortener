@@ -24,11 +24,16 @@ export default function UserLogin() {
   const loginUser = async (e)=>{
     e.preventDefault()
     let userData = {
-      email, password
+      email:email,
+      password:password
+
     }
-    const response = await axios.get(apiUrl+'/users/login',userData)
+    const response = await axios.post(apiUrl+'/users/login',userData)
     console.log(response);
   }
+
+
+
   const createAccount = async (e)=>{
     e.preventDefault()
     let userData = {

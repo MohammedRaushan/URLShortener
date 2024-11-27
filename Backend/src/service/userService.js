@@ -53,7 +53,7 @@ const getUser = async (userId) => {
 const getUserByEmailAndPassword = async (email, password) => {
     try {
         // Find the user by ID
-        const user = await User.find({email:email,password:password});
+        const user = await User.find({"email":email,"password":password});
 
         if (!user) {
             console.log("User not found");

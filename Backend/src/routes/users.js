@@ -41,7 +41,7 @@ router.get('/get-user/:userId', async (req, res, next) => {
     res.status(400).json({ error: "Error while fetching user", details: err.message });
   }
 })
-router.get('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   try {
     const {email, password} = req.body
     const response = await getUserByEmailAndPassword(email, password)
