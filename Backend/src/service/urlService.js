@@ -1,7 +1,7 @@
 const Link = require('../db/models/Link');
 
 // Create link function (unchanged)
-const createLink = async (data, userId, baseUrl) => {
+const createLink = async (data, baseUrl) => {
   try {
     let isLinkExist;
     let routelink;
@@ -17,7 +17,7 @@ const createLink = async (data, userId, baseUrl) => {
         title: data.title,
         link: routelink,
         actualUrl: data.actualUrl,
-        userId: userId,
+        userId: data.userId,
         clicks: 0,
       })
       return link.save()
@@ -100,6 +100,6 @@ const generateLink = (baseUrl)=>{
   for(let i=0;i<8;i++){
     result += letters[Math.ceil(Math.random()*letters.length-1)];
   }
-  return baseUrl+"/"+result
+  return baseUrl+""+result
 }
 module.exports = { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks };

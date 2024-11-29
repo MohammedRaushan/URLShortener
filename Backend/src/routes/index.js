@@ -4,10 +4,10 @@ var { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks } =
 
 /* POST add-link */
 router.post('/add-link', async (req, res, next) => {
-  const { userId, linkData } = req.body;  // Expecting `userID` and `linkData` in the body of the request
-  const baseUrl = req.headers.host
+  // const baseUrl = req.headers.host
   try {
-    const response = await createLink(linkData, userId, baseUrl)
+    const { linkData, baseUrl } = req.body;  // Expecting `userID` and `linkData` in the body of the request
+    const response = await createLink(linkData, baseUrl)
     if (response?.details == "Link already exist") {
       return res.status(404).json({ message: 'Error while adding link', details: response.details });
     }

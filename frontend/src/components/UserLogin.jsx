@@ -1,10 +1,12 @@
 import { Button, TextField } from '@mui/material'
 import React, { useState } from 'react'
-import {apiUrl} from '../api/api'
+import {apiUrl} from './api/api'
 import axios from 'axios'
 import logo from '../assets/logo.png'
+import {useNavigate} from 'react-router-dom'
 
 export default function UserLogin() {
+  const navigate = useNavigate()
   const [name, setName]=useState('')
   const [email, setEmail]=useState('')
   const [password,setPassword]=useState('')
@@ -29,7 +31,14 @@ export default function UserLogin() {
 
     }
     const response = await axios.post(apiUrl+'/users/login',userData)
-    console.log(response);
+    if(response.data.data.length>0){
+      // console.log('userId',response.data.data[0]._id)
+      localStorage.setItem('userId',response.data.data[0]._id)
+      navigate("/")
+    }
+    else{
+      alert("Failed")
+    }
   }
 
 

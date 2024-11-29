@@ -1,1 +1,0 @@
-export const apiUrl = "https://urlshortener-784r.onrender.com"
