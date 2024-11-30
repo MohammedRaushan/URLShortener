@@ -4,6 +4,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { apiUrl } from '../api/api';
 import axios from 'axios'
 import { Snackbar } from '@mui/material';
+import { Atom, Mosaic } from 'react-loading-indicators';
 
 
 export default function GenerateLink() {
@@ -11,7 +12,9 @@ export default function GenerateLink() {
   const [actualUrl, setActualURL] = useState('')
   const [outputURL, setOutputURL] = useState('')
   const [copySnackBar, setCopySnackbar]=useState(false)
+  const [loadState, setLoadState]=useState('Not Loaded')
   const generateLink = async () => {
+    setLoadState('Processing')
     const userId = localStorage.getItem('userId')
     const baseUrl = document.baseURI
     const linkData = {
@@ -22,6 +25,7 @@ export default function GenerateLink() {
     const response = await axios.post(apiUrl + "/add-link", { linkData, baseUrl })
     if (response.status == 200) {
       setOutputURL(response.data.data.link)
+      setLoadState('Loaded')
     }
   }
   const copyLink = () => {
@@ -49,13 +53,14 @@ export default function GenerateLink() {
       <div id="header">
         <h1 className='text-3xl text-white font-bold '>Generate Shortened URL</h1>
       </div>
-      <div id="link-input" className='flex flex-col justify-center items-center my-10 p-4 bg-black/20 rounded'>
+      <div id="link-input" className='flex flex-col justify-center items-center space-y-2 my-10 p-4 bg-black/20 rounded'>
         <input type="text" value={title} onChange={(e) => { setTitle(e.target.value) }} className='bg-[transparent] outline-none w-full  px-4 text-white pb-2' placeholder='Title' />
         <input type="text" value={actualUrl} onChange={(e) => { setActualURL(e.target.value) }} className='w-full bg-[transparent] px-4 text-white outline-none' placeholder='Your URL' />
-        <button onClick={generateLink} className='text-white'>Generate Link</button>
+        <button onClick={generateLink} className='text-white bg-black/30 py-2 px-4 rounded'>Generate Link</button>
       </div>
       <div id="link-output" className='bg-black/20 text-white h-80 rounded-2xl flex flex-col justify-center items-center space-y-4'>
-        <TaskSuccess />
+        {loadState=='Processing' && <Atom color="#32cd32" size="medium" text="" textColor="" />}
+        {loadState=='Loaded' && <TaskSuccess />}
       </div>
       <Snackbar
         anchorOrigin={{ vertical:'bottom',horizontal: 'right' }}

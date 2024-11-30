@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks } = require('../service/urlService');
+var { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks, getRedirectLink } = require('../service/urlService');
 
 /* POST add-link */
 router.post('/add-link', async (req, res, next) => {
@@ -79,6 +79,20 @@ router.get("/get-link/:linkId", async (req, res, next)=>{
   const linkId = req.params.linkId
   try{
     const response = await getLink(linkId)
+    if(response.details == "Link doesn't exist"){
+      return res.status(404).json({message:"Cannot find the link", details:response.details})
+    }
+    res.status(200).json({message:"Link Details", data:response})
+  }
+  catch(err){
+    res.status(500).json({ error: 'Error while fetching the link', details: err.message });
+  }
+})
+
+router.post("/get-redirect-link", async (req, res, next)=>{
+  const { link } = req.body
+  try{
+    const response = await getRedirectLink(link)
     if(response.details == "Link doesn't exist"){
       return res.status(404).json({message:"Cannot find the link", details:response.details})
     }

@@ -94,6 +94,19 @@ const getLink = async (linkId) =>{
   }
 }
 
+const getRedirectLink = async (r_link) =>{
+  try {
+    const link = await Link.find({link:r_link})
+    if(!link){
+      return {details:"Link doesn't exist"}
+    }
+    return link
+  } catch (err) {
+    return { error: "Something went wrong while fetching the link" };
+  }
+}
+
+
 const generateLink = (baseUrl)=>{
   const letters = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
   let result = ""
@@ -102,4 +115,4 @@ const generateLink = (baseUrl)=>{
   }
   return baseUrl+""+result
 }
-module.exports = { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks };
+module.exports = { createLink, editLink, getLink, getAllLinks, getRedirectLink, deleteLink, deleteAllLinks };

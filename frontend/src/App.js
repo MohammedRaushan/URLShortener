@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLogin from "./components/UserLogin";
 import UserHomePage from "./components/UserHomePage";
-import GenerateLink from "./components/generateLink/GenerateLink";
+import RedirectPage from "./components/RedirectPage";
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
     <Routes>
       <Route path="/" element={<UserHomePage/>} />
       <Route path="/create-account" element={<UserLogin/>} />
+      <Route path="/*" element={<RedirectPage/>} />
     </Routes>
     </BrowserRouter>
   );

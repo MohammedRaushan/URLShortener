@@ -13,7 +13,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-#homepage{
+#homepage, #redirectpage{
   background: linear-gradient(#040B26,#001A4C);
   height: 100vh;
 }
