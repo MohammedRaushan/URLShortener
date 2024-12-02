@@ -34,10 +34,10 @@ const LinkDetailsTable = ({ links }) => {
                 >
                     <TableRow>
                         <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Title</TableCell>
-                        <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
+                        <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="left">
                             Short Link
                         </TableCell>
-                        <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
+                        <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="left">
                             Actual URL
                         </TableCell>
                         <TableCell sx={{ color: 'white', fontWeight: 'bold' }} align="right">
@@ -49,7 +49,7 @@ const LinkDetailsTable = ({ links }) => {
                     {links.map((link) => (
                         <TableRow
                             key={link._id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 },height:'20px', textOverflow:'ellipsis' }}
                         >
                             <TableCell
                                 component="th"
@@ -58,16 +58,18 @@ const LinkDetailsTable = ({ links }) => {
                             >
                                 {link.title}
                             </TableCell>
-                            <TableCell align="right" style={{ flex: 1, color: 'white' }}>
+                            <TableCell align="left" style={{ flex: 1, color: 'white' }}>
                                 {link.link}
                             </TableCell>
                             <TableCell
-                                align="right"
-                                style={{
-                                    overflow: 'hidden',
+                                align="left"
+                                sx={{
                                     maxWidth: '100px',
-                                    maxHeight: '20px',
+                                    maxHeight: '10px',
+                                    overflow: 'hidden',
                                     color: 'white',
+                                    whiteSpace:'nowrap',
+                                    textOverflow:'ellipsis'
                                 }}
                             >
                                 {link.actualUrl}
@@ -115,7 +117,7 @@ export default function Dashboard() {
                         <h3 className='text-xl'>No. of times scanned/redirected : 30</h3>
                     </div>
                 </div>
-                <div id="section2" className=''>
+                <div id="section2">
                     <LinkDetailsTable links={links} />
                 </div>
             </div>
