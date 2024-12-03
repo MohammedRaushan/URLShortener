@@ -1,12 +1,12 @@
 const Link = require('../db/models/Link');
 
 // Create link function (unchanged)
-const createLink = async (data, baseUrl) => {
+const createLink = async (data) => {
   try {
     let isLinkExist;
     let routelink;
     while(true){
-      routelink = generateLink(baseUrl)
+      routelink = generateLink()
       isLinkExist = await Link.find({ "link": routelink })
       if(isLinkExist.length == 0){
         break
@@ -51,14 +51,10 @@ const deleteAllLinks = async ()=>{
 
 const editLink = async (linkId, updatedData) => {
   try {
-    // const link = await Link.findById(linkId)
-    // if(!link){
-    //   return {details:"Link does not exist"}
-    // }
-    // link
+    console.log(updatedData);
     const updatedLink = await Link.findByIdAndUpdate(
       linkId,
-      { ...updatedData },
+      {...updatedData.linkData},
       { new: true }  // Return the updated document
     );
     if (!updatedLink) {
@@ -107,12 +103,12 @@ const getRedirectLink = async (r_link) =>{
 }
 
 
-const generateLink = (baseUrl)=>{
+const generateLink = ()=>{
   const letters = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
   let result = ""
   for(let i=0;i<8;i++){
     result += letters[Math.ceil(Math.random()*letters.length-1)];
   }
-  return baseUrl+""+result
+  return result
 }
 module.exports = { createLink, editLink, getLink, getAllLinks, getRedirectLink, deleteLink, deleteAllLinks };

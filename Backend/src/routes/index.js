@@ -6,8 +6,8 @@ var { createLink, editLink, getLink, getAllLinks, deleteLink, deleteAllLinks, ge
 router.post('/add-link', async (req, res, next) => {
   // const baseUrl = req.headers.host
   try {
-    const { linkData, baseUrl } = req.body;  // Expecting `userID` and `linkData` in the body of the request
-    const response = await createLink(linkData, baseUrl)
+    const { linkData} = req.body;  // Expecting `userID` and `linkData` in the body of the request
+    const response = await createLink(linkData)
     if (response?.details == "Link already exist") {
       return res.status(404).json({ message: 'Error while adding link', details: response.details });
     }

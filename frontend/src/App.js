@@ -9,7 +9,7 @@ function App() {
     <Routes>
       <Route path="/" element={<UserHomePage/>} />
       <Route path="/create-account" element={<UserLogin/>} />
-      <Route path="/*" element={<RedirectPage/>} />
+      <Route path="/:linkToken" element={<RedirectPage/>} />
     </Routes>
     </BrowserRouter>
   );

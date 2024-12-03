@@ -59,7 +59,7 @@ export default function UserLogin() {
         <div className='hidden md:flex flex-1 justify-center items-center bg-[#004FF1]' style={{}}>
           <img className='w-60 h-60' src={logo} alt="" />
         </div>
-        <form onSubmit={loginUser} id='login-form' className='flex flex-col space-y-4 flex-1 justify-center px-6 hidden'>
+        <form onSubmit={loginUser} id='login-form' className='flex flex-col space-y-4 flex-1 justify-center px-6'>
           <h1 className='text-5xl font-bold text-[#004FF1]'>Hi there!</h1>
           <p>Login to your account</p>
           <TextField id="outlined-basic" value={email} onChange={(e)=>{setEmail(e.target.value)}} label="Email id" variant="outlined" />
@@ -68,7 +68,7 @@ export default function UserLogin() {
           <p className='text-xl self-center'>Don't have account? <span onClick={changeComponent} style={{color:'#004FF1', cursor:'pointer'}}>Create here</span></p>
         </form>
         {/* Signup form */}
-        <form onSubmit={createAccount} id='signup-form' className='flex flex-col space-y-4 flex-1 justify-center px-6'>
+        <form onSubmit={createAccount} id='signup-form' className='flex flex-col space-y-4 flex-1 justify-center px-6 hidden'>
           <h1 className='text-5xl font-bold text-[#004FF1]'>Hi there!</h1>
           <p>Create your account to get started</p>
           <TextField id="outlined-basic" value={name} onChange={(e)=>{setName(e.target.value)}} label="Your name" variant="outlined" />
