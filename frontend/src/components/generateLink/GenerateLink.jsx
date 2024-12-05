@@ -22,10 +22,16 @@ export default function GenerateLink() {
       actualUrl,
       userId
     }
-    const response = await axios.post(apiUrl + "/add-link", { linkData })
-    if (response.status === 200) {
-      setOutputURL(response.data.data.link)
-      setLoadState('Loaded')
+    try{
+      const response = await axios.post(apiUrl + "/add-link", { linkData })
+      if (response.status === 200) {
+        setOutputURL(response.data.data.link)
+        setLoadState('Loaded')
+      }
+    }
+    catch(err){
+      alert("Error while generating link")
+      setLoadState('Not Loaded')
     }
   }
   const copyLink = () => {
@@ -59,6 +65,7 @@ export default function GenerateLink() {
         <button onClick={generateLink} className='text-white bg-black/30 py-2 px-4 rounded'>Generate Link</button>
       </div>
       <div id="link-output" className='bg-black/20 text-white h-80 rounded-2xl flex flex-col justify-center items-center space-y-4'>
+        {loadState==='Not Loaded' && <h1>No links generated since loaded</h1>}
         {loadState==='Processing' && <Atom color="#32cd32" size="medium" text="" textColor="" />}
         {loadState==='Loaded' && <TaskSuccess />}
       </div>

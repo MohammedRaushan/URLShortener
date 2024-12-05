@@ -146,10 +146,10 @@ export default function Dashboard() {
     const [loadData, setLoadData] = useState(false)
     const [links, setLinks] = useState([])
     const [snackbar, setSnackbar] = useState({ open: false, message: '' })
+    const userId = localStorage.getItem('userId')
 
     const getLinks = async () => {
         try {
-            const userId = localStorage.getItem('userId')
             const response = await axios.get(apiUrl + `/get-all-links/${userId}`)
             setLinks(response.data.data)
             setSnackbar({ open: true, message: 'Data Fetched successfully' })
@@ -160,6 +160,7 @@ export default function Dashboard() {
     useEffect(() => {
         getLinks()
     }, [loadData])
+    if(userId!='' && userId!=null)
     return (
         <div id='dashboard' style={{ scrollbarWidth: 'none' }} className='text-white h-[90vh] overflow-scroll'>
             <div className='flex flex-col space-y-8'>
